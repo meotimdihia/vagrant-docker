@@ -8,4 +8,6 @@ apt-get install -y linux-image-generic-lts-raring linux-headers-generic-lts-rari
 
 curl -s https://get.docker.io/ubuntu/ | sudo sh
 
-#docker run -v /home/vagrant/mobplf/:/var/www -p 8080:80 -d apache
+sudo docker build -t meotimdihia/redis /home/vagrant/sync_folders/dockerfiles/redis/
+sudo docker build -t meotimdihia/mysql-server /home/vagrant/sync_folders/dockerfiles/mysql-server/
+sudo docker build -t meotimdihia/platform /home/vagrant/sync_folders/dockerfiles/apache-platform/
