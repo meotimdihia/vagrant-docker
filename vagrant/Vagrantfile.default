@@ -1,0 +1,21 @@
+# -*- mode: ruby -*-
+# vi: set ft=ruby :
+
+VAGRANTFILE_API_VERSION = "2"
+
+Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
+
+  config.vm.box = "hashicorp/precise64"
+  config.vm.provision :shell, :path => "bootstrap.sh"
+
+  config.vm.network "forwarded_port", guest: 80, host: 8088
+  config.vm.network "forwarded_port", guest: 3306, host: 3307
+
+  config.ssh.password = "vagrant"
+
+  config.vm.synced_folder "./mysql-server/", "/home/vagrant/mysql-server-setup/"
+
+  # You need change location this folder
+  config.vm.synced_folder "/var/www/d", "/var/www/platform/"
+
+end
