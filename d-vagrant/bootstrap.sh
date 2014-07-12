@@ -35,7 +35,7 @@ chmod 664 /etc/mysql/conf.d/my.cnf
 cp /home/vagrant/mysql-server-setup/run /usr/local/bin/run
 chmod +x /usr/local/bin/run
 # run setup db and user for mysql
-# /bin/bash /usr/local/bin/run
+exec /usr/local/bin/run
 
 # enable apache modules
 a2enmod rewrite; a2enmod expires; a2enmod auth_basic; a2enmod headers; a2enmod deflate; a2enmod env
