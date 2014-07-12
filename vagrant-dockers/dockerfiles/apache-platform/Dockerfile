@@ -19,7 +19,7 @@ RUN git clone https://github.com/nicolasff/phpredis.git /tmp/phpredis
 RUN cd /tmp/phpredis && /usr/bin/phpize && ./configure && make && make install
 
 RUN echo "extension=redis.so" > /etc/php5/conf.d/redis.ini
-RUN echo "ServerName localhost" > /etc/apache2/conf.d/httpd.conf
+RUN echo "ServerName localhost" > /etc/hostname
 RUN echo "SetEnv APPLICATION_ENV 'development'" >> /etc/apache2/conf.d/httpd.conf
 
 ENV APACHE_RUN_USER www-data
