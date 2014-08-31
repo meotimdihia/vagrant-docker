@@ -11,15 +11,16 @@ elasticsearch:
         - installed
         - require:
             - pkgrepo: elasticsearch
+
+    {% if not salt['file.directory_exists']('/usr/share/elasticsearch/plugins/marvel') %}
     cmd.run:
         - name: bin/plugin -i elasticsearch/marvel/latest
         - cwd: /usr/share/elasticsearch/
-        - require:
-            - pkg: elasticsearch
+        - require_in:
+            - service: elasticsearch
+    {% endif %}
+
     service:
         - running
         - require:
             - pkg: elasticsearch
-            - cmd: elasticsearch
-
-
