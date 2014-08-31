@@ -1,3 +1,6 @@
+default-jre:
+    pkg:
+        - installed
 elasticsearch:
     pkgrepo.managed:
         - humanname: elasticsearch
@@ -6,6 +9,8 @@ elasticsearch:
         - key_url: http://packages.elasticsearch.org/GPG-KEY-elasticsearch
     pkg:
         - installed
+        - require:
+            - pkgrepo: elasticsearch
     cmd.run:
         - name: bin/plugin -i elasticsearch/marvel/latest
         - cwd: /usr/share/elasticsearch/
