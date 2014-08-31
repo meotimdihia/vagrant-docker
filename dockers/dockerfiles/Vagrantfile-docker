@@ -5,12 +5,39 @@
 VAGRANTFILE_API_VERSION = "2"
 
 Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
-  # All Vagrant configuration is done here. The most common configuration
+
+
+  config.vm.define "db" do |db|
+    db.vm.provider "docker" do |d|
+      d.build_dir = "/var/www/d-vagrant/dockerfiles/mysql-server/"
+      d.name = "db"
+      d.has_ssh = true
+    end
+  end
+
+  config.vm.define "redis" do |redis|
+    redis.vm.provider "docker" do |d|
+      d.build_dir = "/var/www/d-vagrant/dockerfiles/redis/"
+      d.name = "redis"
+      d.has_ssh = true
+    end
+  end
+  
+  config.vm.define "platform" do |platform|
+    platform.vm.provider "docker" do |d|
+      d.build_dir = "/var/www/d-vagrant/dockerfiles/apache-platform/"
+      d.name = "platform"
+      d.has_ssh = true
+      d.link "db:db"
+    end
+    platform.vm.synced_folder "/var/www/d/", "/var/www/platform/"
+  end
+
   # options are documented and commented below. For a complete reference,
   # please see the online documentation at vagrantup.com.
 
   # Every Vagrant virtual environment requires a box to build off of.
-  config.vm.box = "hashicorp/precise64"
+  # config.vm.box = "base"
 
   # Disable automatic box update checking. If you disable this, then
   # boxes will only be checked for updates when the user runs
@@ -24,7 +51,7 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
 
   # Create a private network, which allows host-only access to the machine
   # using a specific IP.
-  config.vm.network "private_network", ip: "192.168.50.3"
+  # config.vm.network "private_network", ip: "192.168.33.10"
 
   # Create a public network, which generally matched to bridged network.
   # Bridged networks make the machine appear as another physical device on
